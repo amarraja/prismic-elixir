@@ -18,6 +18,21 @@ defmodule Prismic.Fragment.StructuredText.Block.Image do
   def link_to(%{view: %Fragment.View{link_to: link_to}}), do: link_to
 end
 
+# Not sure if this is needed? The next one definitely is, so just delegated
 defimpl Prismic.Fragment, for: Prismic.Fragment.StructuredText.Block.Image do
-  def as_html(_, _link_resolver, _html_serializer), do: ""
+  def as_html(image, link_resolver, html_serializer) do
+    Prismic.Fragment.StructuredText.Block.as_html(image, link_resolver, html_serializer)
+  end
+end
+
+defimpl Prismic.Fragment.StructuredText.Block, for: Prismic.Fragment.StructuredText.Block.Image do
+  alias Prismic.Fragment.StructuredText.Block.Image
+
+  def as_html(image, _link_resolver, _html_serializer) do
+    url = Image.url(image)
+    width = Image.width(image)
+    height = Image.height(image)
+
+    ~s(<img src="#{url}" width="#{width}" height="#{height}")
+  end
 end
