@@ -10,7 +10,12 @@ defimpl Block, for: Block.Text.Paragraph do
   alias Prismic.Fragment.StructuredText.Span
 
   def as_html(para, _link_resolver, _html_serializer) do
-    ~s(<p>#{process_spans(para)}</p>)
+    response =
+      para
+      |> process_spans()
+      |> String.replace("\n", "<br />")
+
+    ~s(<p>#{response}</p>)
   end
 
   # TODO: All this should move out (unless paragraph is the only one with spans?)
