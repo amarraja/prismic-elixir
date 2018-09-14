@@ -17,8 +17,9 @@ defimpl Block, for: Block.Text.Paragraph do
   defp process_spans(%{text: text, spans: []}), do: text
 
   defp process_spans(%{text: text, spans: spans}) do
-    text_stream = String.codepoints(text)
-    do_process_spans(text_stream, 0, spans, [], [])
+    String.codepoints(text)
+    |> do_process_spans(0, spans, [], [])
+    |> IO.iodata_to_binary()
   end
 
   defp do_process_spans([], _pos, _spans, applied_spans, acc) do
