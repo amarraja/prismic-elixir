@@ -33,6 +33,11 @@ defimpl Prismic.Fragment.StructuredText.Block, for: Prismic.Fragment.StructuredT
     width = Image.width(image)
     height = Image.height(image)
 
-    ~s(<img src="#{url}" width="#{width}" height="#{height}")
+    classes =
+      ["block-img", image.label]
+      |> Enum.reject(&is_nil/1)
+      |> Enum.join(" ")
+
+    ~s(<p class="#{classes}"><img src="#{url}" width="#{width}" height="#{height}" /></p>)
   end
 end
