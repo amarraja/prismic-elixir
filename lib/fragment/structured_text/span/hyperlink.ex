@@ -14,6 +14,6 @@ end
 defimpl Span, for: Span.Hyperlink do
   # TODO
   def serialize(_, _link_resolver), do: ""
-  def open_tag(%Span.Hyperlink{link: link}), do: ~s(<a href="#{link}">)
+  def open_tag(%Span.Hyperlink{link: link}), do: ~s(<a href="#{link.url}">)
   def close_tag(_span), do: "</a>"
 end
